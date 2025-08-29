@@ -12,8 +12,7 @@ The steps we took in this simulation are listed below:
 2. now run credit_card_fraud.py 42
 
 ## Materials and Methods
-
-Despite the fact that our experiment was successful when simulating a collaborative environment, we need a way to judge if the provenance collected meets the researchers' needs. So, we decided to use the [First Provenance Challenge](https://openprovenance.org/provenance-challenge/FirstProvenanceChallenge.html) and its questions to see if noWorkflow's collected provenance is useful even if we are in a collaborative environment.
+We decided to use the [First Provenance Challenge](https://openprovenance.org/provenance-challenge/FirstProvenanceChallenge.html) and its questions to see if noWorkflow's features provenance are useful to cover a researcher's needs.
 
 However, there are two problems with using the First Provenance Challenge and its questions directly. The first one is that the challenge is about a specific workflow that is different from ours. The second one is that the questions are about that workflow. The key word being 'workflow', because it's not a script like our experiment. Therefore, we decided to adapt the questions in the First Provenance Challenge to include scripts in general.
 
