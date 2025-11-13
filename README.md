@@ -2,7 +2,7 @@
 
 This is an experiment made to show how noWorkflow's features can help scientists working on in virtuo and in silico experiments.
 
-The experiment is a machine learning experiment to find fraud in credit cards. Its (code)[/credit_card_fraud.py] is in this repository but the the file 'creditcard.csv' used in the code is the [Kaggle Credit Card Fraud Detection Dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud). We also delete the file from noWorkflows [provenance](/.noWorkflow) because of GitHub policy about file size. This doesn't spoil this evaluation, but some of noWorkflow's features will underperform. Furthermore, note that there is an unnecessary loop when initializing the object \textbf{RandomUnderSampler}. We wrote the code like this to help us show some of noWorkflow's features.
+The experiment is a machine learning experiment to find fraud in credit cards. Its (code)[/credit_card_fraud.py] is in this repository but the the file 'creditcard.csv' used in the code is the [Kaggle Credit Card Fraud Detection Dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud). We deleted the file from because of GitHub policy about file size. Furthermore, note that there is an unnecessary loop when initializing the object \textbf{RandomUnderSampler}. We wrote the code like this to help us show some of noWorkflow's features.
 
 Other than that, we ran the experiment twice, meaning we did two trials of the same experiment. The difference between the two trials is the value of the seed, the variable \textbf{random\_seed}. On the first trial, we used the value 42, and in the second trial, we used the value 40, passing it as a script parameter.
 
@@ -82,7 +82,7 @@ SELECT *
 FROM code_component as c
 LEFT JOIN trial as t on c.trial_id == t.id
 LEFT JOIN tag as ta on ta.trial_id == t.id
-WHERE t.start LIKE "2025-08-25 15%" AND c.name == (
+WHERE t.start LIKE "2025-11-11 22%" AND c.name == (
 	SELECT c.name
 	FROM code_component as c
 	WHERE c.id IN 
@@ -114,7 +114,7 @@ AND f.trial_id == ac.trial id
 AND (f.mode == "w" OR f.mode == "w+b")
 AND f.name NOT LIKE "nul"
 AND ar.name == "argv"
-AND ar.value LIKE "%’40’%"
+AND ar.value LIKE "%'40'%"
 ```
 
 6 - Find all outputs (produced by the return statement) of a function f,(f∈F) if f is preceded by f', (f'∈F) and f' received the parameter pf.

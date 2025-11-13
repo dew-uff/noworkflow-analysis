@@ -43,7 +43,7 @@ for trial in trials:
     for evaluation in this_trial_evaluations:
         
         #Find F in the trial
-        if(("f1_score(" in (evaluation[1])) and evaluation[2]== 36): # F is 'f1_score' in our case. F's code_line is '36'
+        if(("f1_score(" in (evaluation[1])) and evaluation[2]== 28): # F is 'f1_score' in our case. F's code_line is '36'
             print("Found F: ", evaluation[1], " !")
             evaluation_wdf = get_evaluation_wdf(trial.id, evaluation[0].id)
             #Find G in F wdf
