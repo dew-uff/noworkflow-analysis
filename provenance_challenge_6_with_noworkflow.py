@@ -29,7 +29,7 @@ def get_precedent_evaluation(evaluation_wdf, session):
     for evaluation in evaluation_wdf:
         evaluation_name = session.query(CodeComponent.m.name).filter(CodeComponent.m.trial_id == evaluation.trial_id, CodeComponent.m.id == evaluation.code_component_id).all()[0][0]
         if "train_test_split(" in evaluation_name: #the function G is train_test_split in our case.
-            print("Found G: ", evaluation_name, " !")
+            print("Found G: ", evaluation_name)
             return evaluation
         
 def get_evaluation_dependency(session, trial_id, evaluation_id):
