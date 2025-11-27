@@ -44,7 +44,7 @@ for trial in trials:
         
         #Find F in the trial
         if(("f1_score(" in (evaluation[1])) and evaluation[2]== 28): # F is 'f1_score' in our case. F's code_line is '36'
-            print("Found F: ", evaluation[1], " !")
+            print("Found F: ", evaluation[1])
             evaluation_wdf = get_evaluation_wdf(trial.id, evaluation[0].id)
             #Find G in F wdf
             precedent_evaluation = get_precedent_evaluation(evaluation_wdf, session)
@@ -54,7 +54,7 @@ for trial in trials:
                 dependency_as_evaluation = session.query(Evaluation.m).filter(Evaluation.m.id==dependency.dependency_id, Evaluation.m.trial_id==trial.id).all()[0]
                 argument_string = dependency_as_evaluation.repr
                 if(argument_string == "42"): # P is 42 in our case
-                    print("Found: " + argument_string + " !")
+                    print("Found: " + argument_string)
                     
                     #F output
                     print("F output: ", evaluation[0].repr)
