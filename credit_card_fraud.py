@@ -21,20 +21,24 @@ def get_rus(random_seed):
 def get_ypred(X_train, X_test, y_train):
     rf = RandomForestClassifier()
     rf.fit(X_train, y_train)
-    return rf.predict(X_test)    
+    return rf.predict(X_test)
 
-if __name__ == '__main__':
-    df = get_df()
-    X = df.drop('Class', axis=1)
-    y = df['Class']
-    pca = get_pca()
-    random_seed = 42
-    if len(sys.argv) > 1:
-        random_seed = int(sys.argv[1])
-    rus = get_rus(random_seed)
-    X_resampled, y_resampled = rus.fit_resample(pca.fit_transform(X), y)
-    X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=random_seed)
-    y_pred = get_ypred(X_train, X_test, y_train)
+def save_metrics(y_test, y_pred):
     roc_metric = roc_auc_score(y_test, y_pred)
     f1_metric = f1_score(y_test, y_pred)
+
     open("out.txt", "w").write("ROC="+str(roc_metric)+"\nF1="+str(f1_metric))
+
+
+df = get_df()
+X = df.drop('Class', axis=1)
+y = df['Class']
+pca = get_pca()
+random_seed = 42
+if len(sys.argv) > 1:
+    random_seed = int(sys.argv[1])
+rus = get_rus(random_seed)
+X_resampled, y_resampled = rus.fit_resample(pca.fit_transform(X), y)
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=random_seed)
+y_pred = get_ypred(X_train, X_test, y_train)
+save_metrics(y_test, y_pred)
