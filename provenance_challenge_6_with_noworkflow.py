@@ -3,7 +3,7 @@ import os
 from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.orm import mapper, Session
 from noworkflow.now.persistence import persistence_config, relational
-from noworkflow.now.persistence.models import Trial, Evaluation, CodeComponent, Dependency
+from noworkflow.now.persistence.models import Trial, Evaluation, CodeComponent, Dependency, Tag
 from noworkflow.now.models.dependency_graph.filters import FilterWasDerivedFrom
 
 def get_database():
@@ -58,3 +58,7 @@ for trial in trials:
                     
                     #F output
                     print("F output: ", evaluation[0].repr)
+
+                    # F's trial
+                    f_trial_tag = session.query(Tag.m).filter(Tag.m.trial_id==evaluation[0].trial_id).all()[0]
+                    print("F's trial's tag: ", f_trial_tag.name)
