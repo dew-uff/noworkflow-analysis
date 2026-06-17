@@ -95,13 +95,9 @@ The same baseline pipeline is provided in three forms, so the paper can compare 
 (no code changes); MLflow and manual PROV require the user to add and maintain
 annotations by hand.
 
-| Approach | File | Instrumentation lines | Non-blank lines (vs. baseline 36) |
-|----------|------|-----------------------|-----------------------------------|
-| noWorkflow 2 | `credit_card_fraud.py` (run with `now run`) | **0** | 36 (+0) |
-| MLflow | `credit_card_fraud_mlflow.py` | **10** `mlflow.*` calls | 49 (+13) |
-| Manual W3C PROV | `credit_card_fraud_prov.py` | **34** `prov` bookkeeping lines | 76 (+40) |
+| Approach | File | 
+|----------|------|
+| noWorkflow 2 | `credit_card_fraud.py` (run with `now run`)  |
+| MLflow | `credit_card_fraud_mlflow.py` | 
+| Manual W3C PROV | `credit_card_fraud_prov.py` | 
 
-Beyond raw line counts, the annotations are **manual and can go stale**: e.g., the
-MLflow version logs `pca_components = 3` as a literal, so if `get_pca()` later changes
-to 10 (trial 2.1.1) the logged value is silently wrong unless the user updates it.
-noWorkflow instead records the value actually executed. The paper presents further details.
