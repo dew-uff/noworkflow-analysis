@@ -1,4 +1,4 @@
-# Running example — credit card fraud ML pipeline (noWorkflow 2 paper)
+# Credit card fraud ML pipeline (noWorkflow 2 paper)
 
 This folder materializes the **iterative ML pipeline** that serves as the running
 example of the noWorkflow 2 paper (*Information Systems*). It is the concrete
