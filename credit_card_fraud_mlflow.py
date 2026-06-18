@@ -28,7 +28,8 @@ def save_metrics(y_test, y_pred):
     roc_metric = roc_auc_score(y_test, y_pred)
     f1_metric = f1_score(y_test, y_pred)
 
-    open("out.txt", "w").write("ROC="+str(roc_metric)+"\nF1="+str(f1_metric))
+    with open("out.txt", "w") as f:
+        f.write("ROC="+str(roc_metric)+"\nF1="+str(f1_metric))
 
 
 mlflow.set_experiment("credit_card_fraud")
