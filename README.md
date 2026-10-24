@@ -88,6 +88,13 @@ the script continues past it. Inspect the result with `now vis` (or `now list`).
 patch -p1 < patch_2_pca.patch        # turns v1 into v2
 patch -R -p1 < patch_2_pca.patch     # reverts it
 ```
+## Beyond Python case study
+
+The folder [`beyond-python/`](beyond-python/) holds the case study of the
+paper's section "Beyond Python": the same problem and dataset, with a
+Python script as the glue between an R script and a C program, edited
+across three trials. It has its own driver (`run.sh`) and README.
+
 ## Effort comparison
 
 The same baseline pipeline is provided in three forms, so the paper can compare the
