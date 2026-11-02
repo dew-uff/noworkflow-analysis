@@ -1,0 +1,7 @@
+# The instrumented variants of the running example (credit_card_fraud_mlflow.py,
+# credit_card_fraud_prov.py, generate_prov_graph.py), on top of the environment
+# of the paper (see README.md, Requirements). They run no noWorkflow.
+mlflow==3.17.2
+prov[dot]==3.2.3
+pydot==4.0.1
+networkx==3.7

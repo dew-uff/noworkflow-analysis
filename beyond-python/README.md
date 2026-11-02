@@ -21,7 +21,12 @@ code it launched and how the outputs changed.
 
 ## Requirements
 
-- **noWorkflow 2.2.0** or later (the `now` command), with **pandas**;
+- **Python 3.12** with **noWorkflow 2.2.0** (the `now` command) and
+  **pandas 3.1.0**, in the environment of the paper (the Requirements of
+  [the package's README](../README.md) say how to install it); pandas 3.1
+  opens `creditcard.csv` seven times and probes the cgroup files, and
+  `now show 1.1.1 -f` lists those accesses next to the pipeline's own, as
+  the paper shows;
 - **R 4** or later (`Rscript`; base R is enough);
 - a C compiler (`cc`), `patch`, and **Graphviz** (`dot`) for the drawing of the dataflow;
 - optional, for the fourth trial: the **rdtLite** package in R
@@ -80,8 +85,9 @@ of `Rscript`.
 | `show-rdtlite-1.1.1-f.txt` | `now show 1.1.1 -f` in `run/rdtlite/`: `model.R`, `prepared.csv` and `pred.csv` as accesses of the `Rscript` launch, taken from rdtLite's document, next to `prov_model/prov.json` and the copies rdtLite keeps (Python + R, with R's own provenance) |
 
 Timestamps, hashes of the binaries, paths and the versions of R and of the
-compiler depend on the machine. With the Kaggle dataset, R 4.6.1 and Apple
-clang 21, the baseline writes `precision=0.8736`, `recall=0.6786` and
+compiler depend on the machine. The listings and the times of the paper come
+from the same Linux machine, with R 4.5.2, rdtLite 1.4 and gcc 15.2.0. With
+the Kaggle dataset, there as with R 4.6.1 and Apple clang 21, the baseline writes `precision=0.8736`, `recall=0.6786` and
 `F1=0.7638`; trial 1.1.2, `0.8125`, `0.6964` and `0.7500`; trial 1.1.3
 adds `accuracy=0.9991`.
 

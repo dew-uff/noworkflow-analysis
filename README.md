@@ -1,8 +1,11 @@
 # Credit card fraud ML pipeline (noWorkflow 2 paper)
 
-This folder materializes the **iterative ML pipeline** that serves as the running
-example of the noWorkflow 2 paper. It is the concrete
-artifact behind Figure 1 in the paper.
+This repository materializes the **iterative ML pipeline** that serves as the
+running example of the noWorkflow 2 paper, *The Conception and Evolution of
+noWorkflow* (Information Systems): the script of the paper's first figure, the
+patches that turn it into the versions of its trial history, the driver that
+rebuilds that history, the scripts of the paper's usefulness and user-effort
+evaluations, and the case study of its "Beyond Python" section.
 
 The idea is a **single evolving script** (`credit_card_fraud.py`) plus a set of
 **patches** that turn it into the successive code versions of the trial history.
@@ -21,19 +24,36 @@ backup trial is obtained with a restore.
 | `patch_5_scaler.patch` | v2 → v5: add `StandardScaler` before PCA (branch from 2.1.1). |
 | `patch_6_localmodule.patch` | v2 → v6: refactor loading into local module `preprocessing.py` and cache an intermediate `prepared.csv` (branch from 2.1.1). |
 | `run_trials.sh` | Driver that reproduces the whole trial history with `now run` / `now restore`. |
+| `provenance_challenge_6_with_noworkflow.py` | The script that answers query Q6 of the First Provenance Challenge with noWorkflow's library (the usefulness evaluation); run it inside the `run/` directory the driver leaves. |
 | `credit_card_fraud_mlflow.py` | Same pipeline instrumented with **MLflow** (manual `log_param`/`log_metric`/`log_artifact`) — for the effort comparison. |
 | `credit_card_fraud_prov.py` | Same pipeline instrumented with **manual W3C PROV** (`prov` library) — for the effort comparison. |
+| `generate_prov_graph.py` | Draws a PROV-N document as a PNG (`python generate_prov_graph.py provenance.provn`), to look at what the manual PROV variant records. |
+| `requirements-effort.txt` | The pinned versions of MLflow and `prov` for the two instrumented variants (see Effort comparison). |
 
 ## Requirements
 
-These scripts **cannot run in the paper-writing environment** (it lacks the ML
-libraries and the dataset). Run them in the execution environment (e.g. the
-`noworkflow-analysis` repo), which needs:
+- **Python 3.12** and the environment in which every noWorkflow execution
+  of the paper ran, the time measurements of its overhead evaluation and the
+  trials whose listings and figures it shows alike. It is recorded, every
+  version pinned, in the companion repository of the overhead experiments
+  ([`paper-environment/`](https://github.com/dew-uff/noworkflow-overhead-experiments/tree/is-2026-r1/paper-environment)),
+  and installs with one command:
 
-- **noWorkflow 2** (the `now` command);
-- Python packages: `scikit-learn`, `imbalanced-learn`, `pandas`;
+  ```bash
+  python3.12 -m venv venv && . venv/bin/activate
+  pip install -r https://raw.githubusercontent.com/dew-uff/noworkflow-overhead-experiments/is-2026-r1/paper-environment/requirements.txt
+  ```
+
+  It pins **noWorkflow 2.2.0** (the `now` command), pandas 3.1.0 and the
+  rest of the ML stack; the versions were resolved on Linux x86_64. What
+  noWorkflow records depends on them: pandas 3.1, for one, reads the dataset
+  in parallel, opening it seven times, and probes the cgroup files to count
+  the processors, all of which `now show -f` lists as file accesses.
 - the Kaggle **Credit Card Fraud Detection** dataset as `creditcard.csv`
   (<https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud>).
+
+The case study in [`beyond-python/`](beyond-python/) also needs R, a C
+compiler and Graphviz; its README lists them.
 
 ## Trial history reproduced
 
@@ -82,6 +102,11 @@ The driver copies the baseline and the dataset into a fresh `run/` work director
 invokes `now run` / `now restore`. The KeyError trial (4.1.1) is expected to fail;
 the script continues past it. Inspect the result with `now vis` (or `now list`).
 
+The random forest has no seed, so the metrics that a trial with
+`RandomForestClassifier` writes, and the outputs of `f1_score` that the
+paper's query Q6 lists, may change from one run to the next; the history, the
+code hashes and the file accesses do not.
+
 ### Applying a single patch manually
 
 ```bash
@@ -95,6 +120,14 @@ paper's section "Beyond Python": the same problem and dataset, with a
 Python script as the glue between an R script and a C program, edited
 across three trials. It has its own driver (`run.sh`) and README.
 
+## Usefulness evaluation
+
+The paper answers the queries of the First Provenance Challenge over the trial
+history above with `now vis`, SQL, Prolog, pattern matching and the command
+line; the one query that uses noWorkflow as a library, Q6, is the script
+`provenance_challenge_6_with_noworkflow.py`, run inside the `run/` directory
+the driver leaves (`cd run && python ../provenance_challenge_6_with_noworkflow.py`).
+
 ## Effort comparison
 
 The same baseline pipeline is provided in three forms, so the paper can compare the
@@ -107,4 +140,10 @@ annotations by hand.
 | noWorkflow 2 | `credit_card_fraud.py` (run with `now run`)  |
 | MLflow | `credit_card_fraud_mlflow.py` | 
 | Manual W3C PROV | `credit_card_fraud_prov.py` | 
+
+The two instrumented variants run no noWorkflow and the paper reports only
+the instrumentation they require; they need MLflow and `prov` on top of the
+environment above, pinned in `requirements-effort.txt`
+(`pip install -r requirements-effort.txt`; `generate_prov_graph.py` draws
+the PROV document with pydot, which `prov[dot]` brings).
 
